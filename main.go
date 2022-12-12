@@ -4,18 +4,17 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/Chahine-tech/ws/handlers"
+	"github.com/Chahine-tech/ws/server"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
 
 func main() {
 	r := chi.NewRouter()
-	rs := routes.newRessource()
+	s := server.NewServer()
 	r.Use(middleware.Logger)
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello World!"))
-	})
-	r.Mount("/posts", rs.Routes())
-	fmt.Println("Serving on port 3000....")
-	http.ListenAndServe(":3000", r)
+	s.Router.Get("/hello", handlers.HelloHandler())
+	fmt.Println("Serving on port 9000....")
+	http.ListenAndServe(":9000", r)
 }
