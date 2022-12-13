@@ -13,5 +13,6 @@ func main() {
 	r.Use(middleware.Logger)
 	s.Router.Mount("/", r)
 	s.Router.Get("/hello", handlers.HelloHandler())
+	s.Router.Post("/signup", handlers.CreateUserHandler(s.Queries))
 	s.RunServer()
 }
